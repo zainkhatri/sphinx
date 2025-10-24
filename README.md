@@ -23,30 +23,26 @@ Key insights:
 
 ## Version Highlights
 
-### v1–v3 – Naive Thompson
+### v1–v3 : Naive Thompson
 - Pure TS, no safety checks.
 - Constantly switched arms; unstable; mid-50% average.
 
-### v4 – Discounted TS
+### v4 : Discounted TS
 - Added exponential forgetting (gamma=0.995–0.998).
 - Adapted better to drift but still over-reacted sometimes.
 
-### v5 – Credible Bounds
+### v5 : Credible Bounds
 - Added lower-bound checks before sizing up.
 - Cut losses from bad 3-sends.
 
-### v6 – Dark-Age Detection
+### v6 : Dark Age Detection
 - If all planets look bad, force size-1 sends.
 - Prevented wipeouts during global slumps.
 
-### v7 – Simple TS + Dark Age (best run)
+### v7 : Simple TS + Dark Age (best run)
 - Cleanest, minimal version; gamma=0.997, probe every 15.
 - Sizing via credible bounds: LB_2=0.53, LB_3=0.60.
-- Averaged low-70s; peaked at 75.4%.
-
-### v7.1 – Adaptive v7
-- Per-planet freeze if r10 < 35%.
-- Slightly less variance, same ceiling.
+- Averaged low 70s; peaked at 75.4%.
 
 ### Locking Variant (this file)
 - Explores each planet twice, then locks onto the best one.
@@ -57,37 +53,4 @@ Key insights:
 - Tested 25% UCB exploration and stricter sizing (2+ only >70%).
 - Both made it safer but slower; rarely hit 70%.
 
-## Best Setup for High Scores
-
-If you just want the ceiling (~75%):
-
-```
-GAMMA = 0.997
-PROBE_INTERVAL = 15
-LB_2 = 0.53
-LB_3 = 0.60
-```
-
-If you want stability:
-
-```
-GAMMA = 0.995
-WINNER_GAP = 0.08
-LOCK_DURATION = 45–60
-```
-
-## Run It
-
-```bash
-python3 morty_rescue.py
-```
-
-Set your .env:
-
-```
-BASE_URL=https://mortyexpress.sphinxhq.com
-MORTY_TOKEN=your_api_key_here
-SLOW_MODE=0
-```
-
-That's it. v7 gave the best balance of confidence and patience; this locked version trades a few points of success for predictability.# sphinx
+That's it. v7 gave the best balance of confidence and patience; this locked version trades a few points of success for predictability.
